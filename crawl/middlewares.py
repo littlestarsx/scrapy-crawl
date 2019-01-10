@@ -8,6 +8,7 @@
 from scrapy import signals
 from fake_useragent import UserAgent
 from scrapy.pipelines.images import ImagesPipeline
+import random
 
 
 class CrawlSpiderMiddleware(object):
@@ -108,7 +109,23 @@ class CrawlDownloaderMiddleware(object):
 class CrawlUserAgentMiddleware(object):
     def process_request(self, request, spider):
         ua = UserAgent()
-        request.headers['User_Agent'] = ua.random
+        user_agent = ua.random
+        print("当前用户代理>>" + user_agent + "<<")
+        request.headers['User_Agent'] = user_agent
+
+
+class CrawlProxyMiddleware(object):
+    def process_request(self, request,  spider):
+        PROXYPOOL = [
+            {"ipaddr": "115.218.217.119:9000"},
+            {"ipaddr": "144.255.12.232:9999"},
+            {"ipaddr": "114.230.69.250:9999"},
+            {"ipaddr": "111.177.181.223:9999"},
+            {"ipaddr": "175.161.1.53:9000"}
+        ]
+        proxy = random.choice(PROXYPOOL)
+        print("当前代理IP>>" + proxy["ipaddr"]) + "<<"
+        request.meta["proxy"] = "http://%s" % proxy["ipaddr"]
 
 
 class CrawlImagePipeline(ImagesPipeline):

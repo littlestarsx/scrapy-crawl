@@ -48,11 +48,11 @@ DOWNLOAD_DELAY = 0.5
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
-   # 'crawl.middlewares.CrawlSpiderMiddleware': 543,
-   #proxy
-
-   #user agent random
-   'crawl.middlewares.CrawlUserAgentMiddleware': 543,
+    # 'crawl.middlewares.CrawlSpiderMiddleware': 543,
+    #用户代理
+    'crawl.middlewares.CrawlUserAgentMiddleware': 543,
+    #代理IP
+    # 'crawl.middlewares.CrawlProxyMiddleware': 544,
 }
 
 # Enable or disable downloader middlewares
