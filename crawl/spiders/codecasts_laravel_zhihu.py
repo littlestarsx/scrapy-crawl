@@ -30,17 +30,21 @@ class CodecastsLaravelZhihuSpider(scrapy.Spider):
                 'referer': self.start_urls[0],
             }
 
+            index = i_item.css("td.episode-index::text").extract_first()
+            index_text = index.strip()
+            item['index'] = index_text
             title = i_item.css("td.episode-title>a>span::text").extract_first()
             item['title'] = title
             url = i_item.css("td.episode-title>a::attr(href)").extract_first()
             item['url'] = url
-            item['video_name'] = title + '.mp4'
-            item['video_path'] = os.getcwd() + '/video/codecasts/laravel_zhihu/'
+            item['video_name'] = index_text + '-' + title + '.mp4'
+            item['video_path'] = os.getcwd() + '/video/codecasts/laravel-zhihu/'
             item['video_referer'] = url
             item['headers'] = {
                 'referer': url
             }
             item['cookie'] = cookie
+            yield item
             #meta传item字典一起yield
             yield scrapy.Request(url=url, callback=self.video_parse, headers=headers, cookies=cookie, meta={'item': item})
 
