@@ -44,7 +44,6 @@ class CodecastsLaravelZhihuSpider(scrapy.Spider):
                 'referer': url
             }
             item['cookie'] = cookie
-            yield item
             #meta传item字典一起yield
             yield scrapy.Request(url=url, callback=self.video_parse, headers=headers, cookies=cookie, meta={'item': item})
 
