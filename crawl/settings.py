@@ -71,7 +71,8 @@ SPIDER_MIDDLEWARES = {
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     # 'crawl.pipelines.douban_pipelines.DoubanPipeline': 300,
-    'crawl.pipelines.codecasts_laravel_zhihu_pipelines.CodecastsLaravelZhihuPipeline': 300,
+    # 'crawl.pipelines.codecasts_laravel_zhihu_pipelines.CodecastsLaravelZhihuPipeline': 300,
+    'crawl.pipelines.jiuyao_flac_pipelines.JiuyaoFlacPipeline': 300,
     # 'scrapy.pipelines.images.ImagesPipeline':5,
     #重载图片下载返回下载图片本地路径
     # 'crawl.middlewares.CrawlImagePipeline':5,
