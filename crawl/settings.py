@@ -72,7 +72,8 @@ SPIDER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     # 'crawl.pipelines.douban_pipelines.DoubanPipeline': 300,
     # 'crawl.pipelines.codecasts_laravel_zhihu_pipelines.CodecastsLaravelZhihuPipeline': 300,
-    'crawl.pipelines.jiuyao_flac_pipelines.JiuyaoFlacPipeline': 300,
+    # 'crawl.pipelines.jiuyao_flac_pipelines.JiuyaoFlacPipeline': 300,
+    'crawl.pipelines.mli_music_pipelines.MliMusicPipeline': 300,
     # 'scrapy.pipelines.images.ImagesPipeline':5,
     #重载图片下载返回下载图片本地路径
     # 'crawl.middlewares.CrawlImagePipeline':5,
