@@ -57,8 +57,8 @@ def set_logger():
 
 # 歌单
 def get_song_list_list(user_id):
-    url = "https://music_download.24mz.cn/test.php?types=userlist&uid=" + \
-          str(user_id) + "&cache=9a94264bceaad353ef72684c2f01bb76&_=1549000709303"
+    # url = "https://music_download.24mz.cn/test.php?types=userlist&uid=" + str(user_id) + "&cache=9a94264bceaad353ef72684c2f01bb76&_=1549935681207"
+    url = "https://s.mli.im/api/?types=userlist&uid=" + str(user_id) + "&cache=9a94264bceaad353ef72684c2f01bb76&_=1549936085149"
     response = requests.get(url, headers=HEADERS)
     # dict
     response_json = json.loads(response.text)
@@ -82,8 +82,8 @@ def get_song_list_list(user_id):
 
 # 歌单歌曲列表
 def get_song_list(song_list_id, song_list_name):
-    url = "https://music_download.24mz.cn/test.php?types=playlist&id=" + \
-          str(song_list_id) + "&cache=9a94264bceaad353ef72684c2f01bb76&_=1549007084893"
+    # url = "https://music_download.24mz.cn/test.php?types=playlist&id=" + str(song_list_id) + "&cache=9a94264bceaad353ef72684c2f01bb76&_=1549935681207"
+    url = "https://s.mli.im/api/?types=playlist&id=" + str(song_list_id) + "&cache=9a94264bceaad353ef72684c2f01bb76&_=1549936085150"
     response = requests.get(url, headers=HEADERS)
     response_json = json.loads(response.text)
     if response_json['code'] == 200:
@@ -112,11 +112,11 @@ def get_song_list_info(song_list):
     #     song = song_list[song_id]
     # 获取index值判断 enumerate 或者 range
     for i,song_id in enumerate(song_list):
-        # if i >= 30 and i <= 49:
+        if i >= 161 and i <= 170:
             song = song_list[song_id]
             logger.info('歌曲名称：%s' % song['music_name'])
-            url = "https://music_download.24mz.cn/test.php?types=url&id=" + \
-              str(song_id) + "&source=netease&cache=9a94264bceaad353ef72684c2f01bb76&_=1549000709305"
+            # url = "https://music_download.24mz.cn/test.php?types=url&id=" + str(song_id) + "&source=netease&cache=9a94264bceaad353ef72684c2f01bb76&_=1549935681207"
+            url = "https://s.mli.im/api/?types=url&id=" + str(song_id) + "&source=netease&cache=9a94264bceaad353ef72684c2f01bb76&_=1549936085151"
             response = requests.get(url, headers=HEADERS)
             response_json = json.loads(response.text)
             if not response_json:
@@ -127,8 +127,8 @@ def get_song_list_info(song_list):
                 song_list_info[song_id] = song
                 song_list_info_final.update(song_list_info)
             logger.info('************')
-        # else:
-        #     continue
+        else:
+            continue
     logger.info('******获取歌曲信息结束******')
 
 
@@ -156,7 +156,7 @@ def download_song(song_list_info):
             logger.info("下载URL: %s" % music_url)
             logger.info("下载中: %s" % file_path)
             if music_url != '':
-                response = requests.get(music_url, headers=HEADERS, timeout=3)
+                response = requests.get(music_url, headers=HEADERS, timeout=5)
                 # 视频是二进制数据流，content就是为了获取二进制数据的方法
                 data = response.content
                 # 创建路径
@@ -202,26 +202,29 @@ def make_dir(path):
 def main():
     # 开始时间
     start = time.time()
-    # 获取命令行参数
-    user_id = get_args()
-    # 根据用户ID获取网易云音乐用户歌单
-    song_list_list = get_song_list_list(user_id)
-    # 输出歌单ID列表方便用户选择
-    logger.info("******获取用户歌单列表开始******")
-    for song_list_id in song_list_list:
-        # logger.info("用户歌单ID: %s" % str(song_list_id))
-        logger.info("用户歌单ID: %s" % str(song_list_list[song_list_id]['song_list_id']))
-        logger.info("用户歌单名称: %s" % song_list_list[song_list_id]['song_list_name'])
-        logger.info("************")
-    logger.info("******用户歌单列表结束******")
-    # 用户选择下载歌单ID
-    song_list_id = input('>>>输入歌单ID<<<')
-    # 根据歌单ID获取歌单歌曲列表
-    # 注意类型 转 整型
-    song_list = get_song_list(song_list_id, song_list_list[int(song_list_id)]['song_list_name'])
+
+    # # 获取命令行参数
+    # user_id = get_args()
+    # # 根据用户ID获取网易云音乐用户歌单
+    # song_list_list = get_song_list_list(user_id)
+    # # 输出歌单ID列表方便用户选择
+    # logger.info("******获取用户歌单列表开始******")
+    # for song_list_id in song_list_list:
+    #     # logger.info("用户歌单ID: %s" % str(song_list_id))
+    #     logger.info("用户歌单ID: %s" % str(song_list_list[song_list_id]['song_list_id']))
+    #     logger.info("用户歌单名称: %s" % song_list_list[song_list_id]['song_list_name'])
+    #     logger.info("************")
+    # logger.info("******用户歌单列表结束******")
+    # # 用户选择下载歌单ID
+    # song_list_id = input('>>>输入歌单ID<<<')
+    # # 根据歌单ID获取歌单歌曲列表
+    # # 注意类型 转 整型
+    # song_list = get_song_list(song_list_id, song_list_list[int(song_list_id)]['song_list_name'])
+
     # 手动指定歌单
-    # song_list = get_song_list(3778678, '云音乐热歌榜')
+    song_list = get_song_list(1982806222, '2018最火的中文歌（火过的歌）')
     print(song_list)
+
     # 获取歌曲下载链接
     song_list_info = get_song_list_info(song_list)
     # 下载歌曲
